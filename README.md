@@ -1,0 +1,2 @@
+# INODE
+IgnI NixOs DE
