@@ -1,0 +1,23 @@
+{ config, lib, pkgs, ... }:
+
+{
+  services = {
+    xserver.enable = true;
+    xserver.videoDrivers = [ "amdgpu" ];
+    xserver.excludePackages = [ pkgs.xterm ];
+    xserver.displayManager.gdm.enable = false;
+    xserver.desktopManager.gnome.enable = false;
+
+    udisks2.enable = true;
+    fstrim.enable = true;
+    openssh.enable = false;
+    mysql.package = pkgs.mariadb;
+    mysql.enable = true;
+    redis.servers."" = { enable = true; };
+    ntp.enable = true;
+    gnome.core-utilities.enable = false;
+    xserver.desktopManager.xterm.enable = false;
+    dbus.enable = true;
+    tailscale.enable = true;
+  };
+}
