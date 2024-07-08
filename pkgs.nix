@@ -7,6 +7,8 @@
 #dev
     clang
     mold
+openssl
+pkg-config
 
     cliphist
     nix-index    
