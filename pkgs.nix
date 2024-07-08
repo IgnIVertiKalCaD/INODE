@@ -1,15 +1,17 @@
 { config, lib, pkgs, unstablepkgs, ... }:
 
 {
-
   environment.systemPackages = [
   ]
   ++ (with pkgs; [
+#dev
+    clang
+    mold
+
     cliphist
+    nix-index    
     mangohud
-    libdrm
     vesktop
-    tracy
     rnote
     xwayland
     swappy
@@ -52,7 +54,7 @@
     grim
     coreutils-full
     libreoffice
-    brave
+    ungoogled-chromium
     obs-studio
     nettools
     libunwind
@@ -72,7 +74,6 @@
     gnome-tweaks
     gnome-disk-utility
     eog
-    nautilus
     lm_sensors
   ])
   ++ (with unstablepkgs; [
@@ -89,6 +90,5 @@
     full
   ])
   ++ (with pkgs.jetbrains; [
-    rust-rover
   ]);
 }
