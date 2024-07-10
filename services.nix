@@ -9,6 +9,9 @@
     xserver.desktopManager.gnome.enable = false;
 
     udisks2.enable = true;
+    devmon.enable = true;
+    gvfs.enable = true; 
+
     fstrim.enable = true;
     openssh.enable = false;
     mysql.package = pkgs.mariadb;

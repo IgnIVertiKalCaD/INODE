@@ -6,7 +6,6 @@
   fileSystems."/mnt/a6f2b9d3-1b9b-46b4-ac60-7150c90e48f1" =
     {
       device = "/dev/disk/by-uuid/a6f2b9d3-1b9b-46b4-ac60-7150c90e48f1";
-      options = [ "defaults" "x-gvfs-show" ];
 
       fsType = "ext4";
     };

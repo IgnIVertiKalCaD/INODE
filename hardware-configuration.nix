@@ -5,8 +5,7 @@
 
 {
   imports =
-    [
-      (modulesPath + "/installer/scan/not-detected.nix")
+    [ (modulesPath + "/installer/scan/not-detected.nix")
     ];
 
   boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usbhid" "sd_mod" ];
@@ -15,19 +14,39 @@
   boot.extraModulePackages = [ ];
 
   fileSystems."/" =
-    {
-      device = "/dev/disk/by-uuid/93e48394-46f5-4b4a-9cd7-517738fd2087";
+    { device = "/dev/disk/by-uuid/93e48394-46f5-4b4a-9cd7-517738fd2087";
       fsType = "ext4";
     };
 
   fileSystems."/boot" =
-    {
-      device = "/dev/disk/by-uuid/74AA-EB9C";
+    { device = "/dev/disk/by-uuid/74AA-EB9C";
       fsType = "vfat";
+      options = [ "fmask=0022" "dmask=0022" ];
+    };
+
+  fileSystems."/mnt/a6f2b9d3-1b9b-46b4-ac60-7150c90e48f1" =
+    { device = "/dev/disk/by-uuid/a6f2b9d3-1b9b-46b4-ac60-7150c90e48f1";
+      options = [ "defaults" "x-gvfs-show" ];fsType = "ext4";
+    };
+
+  fileSystems."/mnt/dc84c237-143d-4017-94a0-5c8a076d493f" =
+    { device = "/dev/disk/by-uuid/dc84c237-143d-4017-94a0-5c8a076d493f";
+options = [ "defaults" "x-gvfs-show" ];      fsType = "ext4";
+    };
+
+  fileSystems."/mnt/6106d853-8f55-4d4e-949c-66e19666671c" =
+    { device = "/dev/disk/by-uuid/6106d853-8f55-4d4e-949c-66e19666671c";
+      options = [ "defaults" "x-gvfs-show" ];fsType = "ext4";
+    };
+
+  fileSystems."/mnt/f450d8ee-cfcd-4d49-af5e-c18cfab65a09" =
+    { device = "/dev/disk/by-uuid/f450d8ee-cfcd-4d49-af5e-c18cfab65a09";
+      options = [ "defaults" "x-gvfs-show" ];fsType = "btrfs";
     };
 
   swapDevices =
-    [{ device = "/dev/disk/by-uuid/68b7c1d0-491e-4b02-b71f-de781c171f8b"; }];
+    [ { device = "/dev/disk/by-uuid/68b7c1d0-491e-4b02-b71f-de781c171f8b"; }
+    ];
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
   # (the default) this is the recommended approach. When using systemd-networkd it's
@@ -35,6 +54,7 @@
   # with explicit per-interface declarations with `networking.interfaces.<interface>.useDHCP`.
   networking.useDHCP = lib.mkDefault true;
   # networking.interfaces.eno1.useDHCP = lib.mkDefault true;
+  # networking.interfaces.tailscale0.useDHCP = lib.mkDefault true;
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;

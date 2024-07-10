@@ -22,7 +22,7 @@ in
       ./hardware-configuration.nix
       ./pkgs.nix
       ./boot.nix
-      ./fs.nix
+     # ./fs.nix
       ./environment.nix
       ./hardware.nix
       ./systemd.nix

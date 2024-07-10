@@ -7,9 +7,6 @@
 #dev
     clang
     mold
-openssl
-pkg-config
-
     cliphist
     nix-index    
     mangohud
@@ -81,6 +78,9 @@ pkg-config
   ++ (with unstablepkgs; [
     firefox
     xwayland-satellite
+  ])
+  ++ (with pkgs.cinnamon; [
+    nemo-with-extensions  
   ])
   ++ (with pkgs.gnome; [
     gnome-music
