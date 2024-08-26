@@ -1,29 +1,29 @@
-{
-  lib,
-  rustPlatform,
-  fetchFromGitHub,
-  copyDesktopItems,
-  curl,
-  perl,
-  pkg-config,
-  protobuf,
-  xcbuild,
-  fontconfig,
-  freetype,
-  libgit2,
-  openssl,
-  sqlite,
-  zlib,
-  zstd,
-  alsa-lib,
-  libxkbcommon,
-  wayland,
-  xorg,
-  stdenv,
-  darwin,
-  makeFontsConf,
-  vulkan-loader,
-  nix-update-script,
+{ lib
+, rustPlatform
+, fetchFromGitHub
+, copyDesktopItems
+, curl
+, perl
+, pkg-config
+, protobuf
+, xcbuild
+, fontconfig
+, freetype
+, libgit2
+, openssl
+, sqlite
+, zlib
+, zstd
+, alsa-lib
+, libxkbcommon
+, wayland
+, xorg
+, stdenv
+, darwin
+, makeFontsConf
+, vulkan-loader
+, nix-update-script
+,
 }:
 
 rustPlatform.buildRustPackage rec {

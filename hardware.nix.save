@@ -16,4 +16,9 @@
       #intel-vaapi-driver
     ];
   };
+
+  zramSwap = {
+	enable = true;
+         
+  };
 }

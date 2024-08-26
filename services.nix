@@ -3,14 +3,14 @@
 {
   services = {
     xserver.enable = true;
-    xserver.videoDrivers = [ "amdgpu" ];
+    xserver.videoDrivers = [ ];
     xserver.excludePackages = [ pkgs.xterm ];
     xserver.displayManager.gdm.enable = false;
     xserver.desktopManager.gnome.enable = false;
 
     udisks2.enable = true;
     devmon.enable = true;
-    gvfs.enable = true; 
+    gvfs.enable = true;
 
     fstrim.enable = true;
     openssh.enable = false;
@@ -22,5 +22,12 @@
     xserver.desktopManager.xterm.enable = false;
     dbus.enable = true;
     tailscale.enable = true;
+    
+    postgresql = { 
+  	enable = true;
+	package = pkgs.postgresql_16; 
+    };
+   
+    #nginx.enable = true;
   };
 }
