@@ -6,18 +6,11 @@ in
 {
   nix = {
     nixPath = [
-      "nixpkgs=/nix/var/nix/profiles/per-user/root/channels/nixos"
+      "nixpkgs=/nix/var/nix/profiles/per-user/root/channels/nixpkgs"
       "nixos-config=/etc/nixos/configuration.nix"
       "/nix/var/nix/profiles/per-user/root/channels"
       "nixpkgs-overlays=/etc/nixos/overlays"
     ];
-  };
-
-  boot.loader = {
-    efi = {
-      canTouchEfiVariables = true;
-      #efiSysMountPoint = "/boot/EFI"; # ← use the same mount point here.
-    };
   };
 
   _module.args = {
@@ -29,6 +22,7 @@ in
       ./hardware-configuration.nix
       ./pkgs.nix
       ./boot.nix
+      # ./fs.nix
       ./environment.nix
       ./hardware.nix
       ./systemd.nix
@@ -40,16 +34,16 @@ in
       ./users.nix
       ./fonts.nix
       ./polkit.nix
-      ./laptop.nix
-      ./virtualisation.nix
     ];
 
-
+  nixpkgs.overlays = [ (import ./overlays/pkgs.nix) (import ./overlays/firefox-overlay.nix) ];
   nix.settings.trusted-users = [ "root" "igni" ];
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   nix.settings.auto-optimise-store = true;
 
-  #programs.nix-ld.dev.enable = true;
+  nixpkgs.config = {
+    allowUnfree = true;
+  };
 
   time.timeZone = "Europe/Moscow";
 

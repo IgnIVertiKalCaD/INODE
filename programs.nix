@@ -7,12 +7,13 @@
     file-roller = { enable = true; };
     fish = { enable = true; };
     gamemode = { enable = true; };
-    xwayland = { enable = true; };
-    nix-ld = { enable = true; };
-    nix-ld.libraries = with pkgs; [
-      zlib
-      libgcc
-    ];
-  };
 
+    nix-ld = { 
+	enable = true; 
+ 	libraries = with pkgs; [
+      		zlib
+      		libgcc
+    	];
+	 };
+};
 }

@@ -15,23 +15,24 @@
 , libglvnd
 , autoPatchelfHook
 , clang
+, libdisplay-info
 }:
 
 rustPlatform.buildRustPackage rec {
   pname = "niri";
-  version = "0.1.8";
+  version = "0.1.9";
 
   src = fetchFromGitHub {
     owner = "YaLTeR";
     repo = "niri";
     rev = "v${version}";
-    hash = "sha256-13xynDWoOqogUKZTf6lz267hEQGdCE+BE6acs2G3j8k=";
+    hash = "sha256-4YDrKMwXGVOBkeaISbxqf24rLuHvO98TnqxWYfgiSeg=";
   };
 
   cargoLock = {
     lockFile = ./Cargo.lock;
     outputHashes = {
-      "smithay-0.3.0" = "sha256-4lmCbdW+fOnPWEDAbKk4LFcr9KK+akjUJqiwm0pK8Uw=";
+      "smithay-0.3.0" = "sha256-/3BO66yVoo63+5rwrZzoxhSTncvLyHdvtSaApFj3fBg=";
       "libspa-0.8.0" = "sha256-R68TkFbzDFA/8Btcar+0omUErLyBMm4fsmQlCvfqR9o=";
     };
   };
@@ -44,6 +45,7 @@ rustPlatform.buildRustPackage rec {
   ];
 
   buildInputs = [
+    libdisplay-info
     wayland
     systemd # For libudev
     seatd # For libseat

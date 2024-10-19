@@ -1,19 +1,26 @@
 { config, lib, pkgs, unstablepkgs, ... }:
 
 {
-  hardware.cpu.intel.updateMicrocode = true;
+  virtualisation.docker.enable = true;
+
+  hardware.amdgpu.amdvlk.enable = false;
+  hardware.cpu.amd.updateMicrocode = true;
 
   hardware.opengl = {
     enable = true;
     driSupport32Bit = true;
 
-    extraPackages = with unstablepkgs; [
+    extraPackages = with pkgs; [
       mesa
-      intel-media-driver
-      intel-ocl
-      vpl-gpu-rt
       libvdpau-va-gl
-      #intel-vaapi-driver
+      rocmPackages.clr.icd
+      vulkan-loader
+      vulkan-validation-layers
+      vulkan-extension-layer
     ];
+  };
+
+  zramSwap = {
+    enable = true;
   };
 }

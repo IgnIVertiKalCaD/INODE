@@ -1,28 +1,31 @@
 { config, lib, pkgs, ... }:
 
-let asus-wmi-screenpad-module = import ./mods/asus-screenpad-module/asus-screenpad.nix { lib = pkgs.lib; pkgs = pkgs; kernel = config.boot.kernelPackages; };
-in
 {
-  boot.kernelPackages = pkgs.linuxKernel.packages.linux_6_8;
-  boot.kernelParams = [ "video=eDP-1:1920x1080@60" "video=DP-1:1920x515@60" "pcie_aspm=force" "ahci.mobile_lpm_policy=3" ];
+  boot.kernelPackages = pkgs.linuxPackages_zen;
+  boot.kernelParams = [ "amdgpu.ppfeaturemask=0xffffffff" "amd_pstate=active" "amd_pstate.shared_mem=1" "video=DP-1:3840x2160@60" "video=DP-2:2560x1440@60" ];
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  boot.initrd.kernelModules = [ ];
-  boot.kernelModules = [ "asus_wmi_screenpad" ];
+  boot.binfmt.registrations.appimage = {
+    wrapInterpreterInShell = false;
+    interpreter = "${pkgs.appimage-run}/bin/appimage-run";
+    recognitionType = "magic";
+    offset = 0;
+    mask = ''\xff\xff\xff\xff\x00\x00\x00\x00\xff\xff\xff'';
+    magicOrExtension = ''\x7fELF....AI\x02'';
+  };
+
+  boot.initrd.kernelModules = [ "amdgpu" ];
+  boot.kernelModules = [ "v4l2loopback" "amdgpu" ];
   boot.extraModulePackages = with config.boot.kernelPackages;
-    [ asus-wmi-screenpad-module.defaultPackage ];
+    [ v4l2loopback ];
 
   boot.extraModprobeConfig = ''
-    options asus-wmi fnlock_default=0
-
-    options i915 enable_guc=3 enable_fbc=1 enable_psr=1 enable_gvt=1
+    options v4l2loopback devices=1 video_nr=10 card_label="OBS Virtualcam" exclusive_caps=1
+    options amdgpu audio=0
+    options snd-hda-intel power_save_controller=false power_save=0 model=auto 
     
-    options snd_ac97_codec power_save=1
-    options snd_hda_intel power_save_controller=1 power_save=1
-    
-    options iwlmvm power_scheme=3
-    options iwlwifi power_save=1
+    blacklist snd_hda_codec_generic
   '';
 }

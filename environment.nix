@@ -8,8 +8,7 @@
     XDG_CURRENT_DESKTOP = "sway";
     NIXOS_OZONE_WL = "1";
 
-    #VDPAU_DRIVER = "";
-    LIBVA_DRIVER_NAME = "iHD";
-    PKG_CONFIG_PATH = "${pkgs.openssl.dev}/lib/pkgconfig";
+    VDPAU_DRIVER = "radeonsi";
+    LIBVA_DRIVER_NAME = "radeonsi";
   };
 }

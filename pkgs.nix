@@ -6,17 +6,26 @@
     systemPackages = [
     ]
     ++ (with pkgs; [
-      google-chrome      
+      latest.firefox-nightly-bin
+      rustrover
+      teamspeak_client  
+      webstorm
+      micro
+      btop
+      openvpn
+      tor-browser
+      shadowsocks-rust
+      google-chrome
       epiphany
       brillo
       postman
       prismlauncher
-      s-tui
       cliphist
       mangohud
       rnote
       swappy
       easyeffects
+      lact
       bottles
       wl-clipboard
       yarn
@@ -32,7 +41,6 @@
       postman
       pavucontrol
       gimp
-      wireguard-tools
       ffmpeg-full
       mpv
       bat
@@ -44,8 +52,6 @@
       kitty
       wofi
       telegram-desktop
-      btop
-      grim
       coreutils-full
       onlyoffice-bin_latest
       obs-studio
@@ -63,9 +69,9 @@
       evince
       gnome-text-editor
       lm_sensors
-    ])
+    
+])
     ++ (with unstablepkgs; [
-      vesktop
       firefox
     ])
     ++ (with pkgs.cinnamon; [
@@ -84,7 +90,7 @@
       obs-vaapi
     ])
     ++ (with pkgs.qt6; [
-      full
+#      full
     ]);
   };
 }
