@@ -1,5 +1,6 @@
 { config, lib, pkgs, ... }:
 
+
 {
   boot.kernelPackages = pkgs.linuxPackages_zen;
   boot.kernelParams = [ "amdgpu.ppfeaturemask=0xffffffff" "amd_pstate=active" "amd_pstate.shared_mem=1" "video=DP-1:3840x2160@60" "video=DP-2:2560x1440@60" ];
