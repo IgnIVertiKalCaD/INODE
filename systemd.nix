@@ -1,5 +1,8 @@
 { config, lib, pkgs, ... }:
 
+let
+  niri = pkgs.callPackage ./mods/niri/niri.nix { };
+in
 {
   systemd = {
     #services.nix-daemon.environment = {
@@ -8,9 +11,7 @@
     #    http_proxy = "socks5h://localhost:1090"; 
     #};
 
-    extraConfig = ''
-        		DefaultTimeoutStopSec=10s
-      	'';
+    extraConfig = "DefaultTimeoutStopSec=10s";
     services = {
       lact-daemon = {
         enable = true;
@@ -22,6 +23,15 @@
     };
 
     user.services = {
+      niri-session = {
+        description = "autostart niri-session";
+        wantedBy = [ "default.target" ];
+        serviceConfig = {
+          ExecStart = "${niri}/bin/niri-session";
+          Restart = "always";
+          RestartSec = 5;
+        };
+      };
 
       polkit-gnome-authentication-agent-1 = {
         description = "polkit-gnome-authentication-agent-1";

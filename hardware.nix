@@ -6,9 +6,9 @@
   hardware.amdgpu.amdvlk.enable = false;
   hardware.cpu.amd.updateMicrocode = true;
 
-  hardware.opengl = {
+  hardware.graphics = {
     enable = true;
-    driSupport32Bit = true;
+    #driSupport32Bit = true;
 
     extraPackages = with pkgs; [
       mesa

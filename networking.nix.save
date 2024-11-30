@@ -11,5 +11,10 @@
 
   networking.enableIPv6 = true;
 
-  networking.firewall.enable = true;
+  networking.firewall = {
+    enable = false;
+  };
+
+
+
 }
