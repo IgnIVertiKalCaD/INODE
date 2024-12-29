@@ -10,6 +10,10 @@
 
     gnome.gnome-keyring.enable = true;
 
+    tailscale = { 
+        enable = false;
+    };
+
     getty.autologinUser = "igni";
 
     logind = {

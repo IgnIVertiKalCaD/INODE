@@ -5,7 +5,12 @@
     systemPackages = [
     ]
     ++ (with pkgs; [
-element-desktop
+vesktop
+sing-box
+tor-browser 
+exodus 
+keybase-gui 
+keybase 
 nix-index
 gcc
       resources
@@ -50,7 +55,6 @@ gcc
       obs-studio
       nettools
       xdg-desktop-portal-gnome
-      teams-for-linux
       curl
       mpvpaper
       rustc
@@ -64,7 +68,7 @@ gcc
       eog
       gnome-music
       nemo-with-extensions
-    ])
+])
     ++ (with unstablepkgs; [
       telegram-desktop
       webstorm
