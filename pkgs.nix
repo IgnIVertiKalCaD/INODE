@@ -5,18 +5,20 @@
     systemPackages = [
     ]
     ++ (with pkgs; [
-element-desktop
-nix-index
-gcc
-      resources
-      rustrover
+      keepassxc
+      vesktop
+      sing-box
+      tor-browser
+      exodus
+      keybase-gui
+      keybase
+      nix-index
+      gcc
+      devbox
       teamspeak_client
-      micro
-      btop
-      openvpn
       shadowsocks-rust
       google-chrome
-      epiphany
+      brillo
       postman
       prismlauncher
       cliphist
@@ -24,38 +26,46 @@ gcc
       rnote
       swappy
       easyeffects
-      lact
       bottles
       wl-clipboard
       yarn
-      rustup
       binutils
+      filezilla
       (callPackage ./mods/davinci/davinci-resolve-crack.nix { })
+      #(callPackage ./mods/zed-editor/zed-editor.nix { })
       (callPackage ./mods/niri/niri.nix { })
       (callPackage ./mods/xwayland-satellite.nix { })
       nixpkgs-fmt
       v4l-utils
+      postman
       pavucontrol
       gimp
       ffmpeg-full
       mpv
       bat
       killall
+      tmux
+      pipewire
       wget
       playerctl
       kitty
       wofi
+      telegram-desktop
+      btop
+      grim
       coreutils-full
       onlyoffice-bin_latest
       obs-studio
       nettools
+      libunwind
       xdg-desktop-portal-gnome
       teams-for-linux
+      git
       curl
-      mpvpaper
-      rustc
+      hyprpaper
       transmission_4-gtk
       heroic
+      gamescope
       evince
       gnome-text-editor
       lm_sensors
@@ -64,10 +74,10 @@ gcc
       eog
       gnome-music
       nemo-with-extensions
+      webstorm
+      rustrover
     ])
     ++ (with unstablepkgs; [
-      telegram-desktop
-      webstorm
       firefox
     ])
     ++ (with pkgs.nodePackages; [

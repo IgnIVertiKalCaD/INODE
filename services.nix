@@ -10,18 +10,16 @@
 
     gnome.gnome-keyring.enable = true;
 
+    tailscale.enable = true;
+
     getty.autologinUser = "igni";
 
+    mysql = {
+      enable = true;
+      package = pkgs.mariadb;
+    };
     logind = {
       extraConfig = "NAutoVTs=1 ReserveVT=2";
-    };
-
-    zapret = {
-    	enable = true;
-	params = [
-"--dpi-desync=fake,disorder2" "--dpi-desync-fooling=md5sig" "--dpi-desync-repeats=3"
-		  ];
-		
     };
 
     udisks2.enable = true;
@@ -32,7 +30,7 @@
     openssh.enable = false;
 
     ntp.enable = true;
+    gnome.core-utilities.enable = false;
     dbus.enable = true;
-    zram-generator = { enable = true; settings = { }; };
   };
 }

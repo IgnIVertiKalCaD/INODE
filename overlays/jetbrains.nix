@@ -24,7 +24,7 @@ final: prev:
       --add-opens=java.base/jdk.internal.org.objectweb.asm=ALL-UNNAMED
       --add-opens=java.base/jdk.internal.org.objectweb.asm.tree=ALL-UNNAMED
 
-      -javaagent:/mnt/f450d8ee-cfcd-4d49-af5e-c18cfab65a09/backupDe/jetbra/ja-netfilter.jar=jetbrains
+      -javaagent:/home/igni/jetbra/ja-netfilter.jar=jetbrains
     '';
   });
 
@@ -52,7 +52,7 @@ final: prev:
       --add-opens=java.base/jdk.internal.org.objectweb.asm=ALL-UNNAMED
       --add-opens=java.base/jdk.internal.org.objectweb.asm.tree=ALL-UNNAMED
 
-      -javaagent:/mnt/f450d8ee-cfcd-4d49-af5e-c18cfab65a09/backupDe/jetbra/ja-netfilter.jar=jetbrains
+      -javaagent:/home/igni/jetbra/ja-netfilter.jar=jetbrains
     '';
   });
 
@@ -80,7 +80,7 @@ final: prev:
       --add-opens=java.base/jdk.internal.org.objectweb.asm=ALL-UNNAMED
       --add-opens=java.base/jdk.internal.org.objectweb.asm.tree=ALL-UNNAMED
 
-      -javaagent:/mnt/f450d8ee-cfcd-4d49-af5e-c18cfab65a09/backupDe/jetbra/ja-netfilter.jar=jetbrains
+      -javaagent:/home/igni/jetbra/ja-netfilter.jar=jetbrains
     '';
   });
 
@@ -109,7 +109,7 @@ final: prev:
       --add-opens=java.base/jdk.internal.org.objectweb.asm=ALL-UNNAMED
       --add-opens=java.base/jdk.internal.org.objectweb.asm.tree=ALL-UNNAMED
 
-      -javaagent:/mnt/f450d8ee-cfcd-4d49-af5e-c18cfab65a09/backupDe/jetbra/ja-netfilter.jar=jetbrains
+      -javaagent:/home/igni/jetbra/ja-netfilter.jar=jetbrains
     '';
   });
 

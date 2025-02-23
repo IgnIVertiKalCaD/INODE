@@ -38,7 +38,7 @@ let
       version = "19.0.2";
 
       nativeBuildInputs = [
-        (appimage-run.override { buildFHSEnv = buildFHSEnvChroot; } )
+        (appimage-run.override { buildFHSEnv = buildFHSEnvChroot; })
         addDriverRunpath
         copyDesktopItems
         unzip
@@ -130,43 +130,45 @@ let
       # The unpack phase won't generate a directory
       sourceRoot = ".";
 
-      installPhase = let
-        appimageName = "DaVinci_Resolve_${lib.optionalString studioVariant "Studio_"}${version}_Linux.run";
-      in ''
-        runHook preInstall
+      installPhase =
+        let
+          appimageName = "DaVinci_Resolve_${lib.optionalString studioVariant "Studio_"}${version}_Linux.run";
+        in
+        ''
+          runHook preInstall
 
-        export HOME=$PWD/home
-        mkdir -p $HOME
+          export HOME=$PWD/home
+          mkdir -p $HOME
 
-        mkdir -p $out
-        test -e ${lib.escapeShellArg appimageName}
-        appimage-run ${lib.escapeShellArg appimageName} -i -y -n -C $out
+          mkdir -p $out
+          test -e ${lib.escapeShellArg appimageName}
+          appimage-run ${lib.escapeShellArg appimageName} -i -y -n -C $out
 
-        mkdir -p $out/{configs,DolbyVision,easyDCP,Fairlight,GPUCache,logs,Media,"Resolve Disk Database",.crashreport,.license,.LUT}
-        runHook postInstall
-      '';
+          mkdir -p $out/{configs,DolbyVision,easyDCP,Fairlight,GPUCache,logs,Media,"Resolve Disk Database",.crashreport,.license,.LUT}
+          runHook postInstall
+        '';
 
       dontStrip = true;
 
       postFixup = ''
-        for program in $out/bin/*; do
-          isELF "$program" || continue
-          addDriverRunpath "$program"
-        done
+                for program in $out/bin/*; do
+                  isELF "$program" || continue
+                  addDriverRunpath "$program"
+                done
 
-        for program in $out/libs/*; do
-          isELF "$program" || continue
-          if [[ "$program" != *"libcudnn_cnn_infer"* ]];then
-            echo $program
-            addDriverRunpath "$program"
-          fi
-        done
+                for program in $out/libs/*; do
+                  isELF "$program" || continue
+                  if [[ "$program" != *"libcudnn_cnn_infer"* ]];then
+                    echo $program
+                    addDriverRunpath "$program"
+                  fi
+                done
 
-        ln -s $out/libs/libcrypto.so.1.1 $out/libs/libcrypt.so.1
+                ln -s $out/libs/libcrypto.so.1.1 $out/libs/libcrypt.so.1
 
-        ${perl}/bin/perl -pi -e 's/\x74\x11\xe8\x21\x23\x00\x00/\xeb\x11\xe8\x21\x23\x00\x00/g' $out/bin/resolve
-	echo -e "LICENSE blackmagic davinciresolvestudio 999999 permanent uncounted\nhostid=ANY issuer=ANY customer=ANY issued=03-Sep-2024\n akey=0000-0000-0000-0000-0000_ck=00 sig=\"00\"\n" > $out/.license/blackmagic.lic      
-	'';
+                ${perl}/bin/perl -pi -e 's/\x74\x11\xe8\x21\x23\x00\x00/\xeb\x11\xe8\x21\x23\x00\x00/g' $out/bin/resolve
+        	echo -e "LICENSE blackmagic davinciresolvestudio 999999 permanent uncounted\nhostid=ANY issuer=ANY customer=ANY issued=03-Sep-2024\n akey=0000-0000-0000-0000-0000_ck=00 sig=\"00\"\n" > $out/.license/blackmagic.lic      
+        	'';
 
       desktopItems = [
         (makeDesktopItem {
