@@ -5,24 +5,21 @@
     systemPackages = [
     ]
     ++ (with pkgs; [
+      musicpod
       keepassxc
       vesktop
-      sing-box
       tor-browser
       exodus
       keybase-gui
       keybase
       nix-index
-      gcc
       devbox
-      teamspeak_client
-      shadowsocks-rust
+      teamspeak5_client
+#      zed-editor
       google-chrome
       brillo
-      postman
       prismlauncher
       cliphist
-      mangohud
       rnote
       swappy
       easyeffects
@@ -30,21 +27,18 @@
       wl-clipboard
       yarn
       binutils
-      filezilla
       (callPackage ./mods/davinci/davinci-resolve-crack.nix { })
-      #(callPackage ./mods/zed-editor/zed-editor.nix { })
+      (callPackage ./mods/sing-box.nix { })
       (callPackage ./mods/niri/niri.nix { })
       (callPackage ./mods/xwayland-satellite.nix { })
       nixpkgs-fmt
       v4l-utils
-      postman
       pavucontrol
       gimp
       ffmpeg-full
       mpv
       bat
       killall
-      tmux
       pipewire
       wget
       playerctl
@@ -59,8 +53,6 @@
       nettools
       libunwind
       xdg-desktop-portal-gnome
-      teams-for-linux
-      git
       curl
       hyprpaper
       transmission_4-gtk
@@ -72,7 +64,6 @@
       gnome-tweaks
       gnome-disk-utility
       eog
-      gnome-music
       nemo-with-extensions
       webstorm
       rustrover

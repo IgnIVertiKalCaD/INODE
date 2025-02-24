@@ -51,8 +51,6 @@ in
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   nix.settings.auto-optimise-store = true;
 
-  #programs.nix-ld.dev.enable = true;
-
   time.timeZone = "Europe/Moscow";
 
   # Select internationalisation properties.
@@ -62,9 +60,6 @@ in
   #   keyMap = "us";
   #   useXkbConfig = true; # use xkb.options in tty.
   # };
-
-  #virtualisation.libvirtd.enable = true;
-  #programs.virt-manager.enable = true;
 
   system.stateVersion = "23.11";
 }

@@ -18,6 +18,7 @@
       enable = true;
       package = pkgs.mariadb;
     };
+
     logind = {
       extraConfig = "NAutoVTs=1 ReserveVT=2";
     };
