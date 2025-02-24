@@ -17,5 +17,4 @@ in
 
   virtualisation.libvirtd.enable = true;
   virtualisation.docker.enable = true;
-  #virtualisation.kvmgt.enable = true;
 }

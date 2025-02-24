@@ -2,11 +2,7 @@
 
 {
   services = {
-    xserver.enable = false;
-    xserver.excludePackages = [ pkgs.xterm ];
-    xserver.desktopManager.xterm.enable = false;
-    xserver.displayManager.gdm.enable = false;
-    xserver.desktopManager.gnome.enable = false;
+    syncthing = { enable = true;};
 
     gnome.gnome-keyring.enable = true;
 

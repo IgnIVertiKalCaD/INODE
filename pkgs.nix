@@ -15,6 +15,7 @@
       nix-index
       devbox
       teamspeak5_client
+      yt-dlp
 #      zed-editor
       google-chrome
       brillo
