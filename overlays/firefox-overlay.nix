@@ -17,7 +17,8 @@ let
   firefox_versions = with builtins;
     fromJSON (readFile (fetchurl "https://product-details.mozilla.org/1.0/firefox_versions.json"));
 
-  arch = if self.stdenv.system == "i686-linux"
+  arch =
+    if self.stdenv.system == "i686-linux"
     then "linux-i686"
     else "linux-x86_64";
 
@@ -33,10 +34,11 @@ let
     # Nix 2.0 have an bug in `builtins.match` (see https://github.com/NixOS/nix/issues/2147).
     # So I made separate logic for Nix 1.x and Nix 2.0.
     if builtins ? split then
-      substring 0 128 (head
-        (super.lib.filter
-          (s: isString s && substring 128 (stringLength s) s == "  ${file}")
-          (split "\n" sha512sums)))
+      substring 0 128
+        (head
+          (super.lib.filter
+            (s: isString s && substring 128 (stringLength s) s == "  ${file}")
+            (split "\n" sha512sums)))
     else
       head (match ".*[\n]([0-9a-f]*)  ${file}.*" sha512sums);
 
@@ -45,13 +47,14 @@ let
   versionInfo = { name, version, release, system ? arch, timestamp ? null, info ? null, ... }: with builtins;
     if (info != null) then info else
     if release then
-      # For versions such as Beta & Release:
-      # https://download.cdn.mozilla.net/pub/firefox/releases/55.0b3/SHA256SUMS
+    # For versions such as Beta & Release:
+    # https://download.cdn.mozilla.net/pub/firefox/releases/55.0b3/SHA256SUMS
       let
         dir = "https://download.cdn.mozilla.net/pub/firefox/releases/${version}";
         file = "${system}/en-US/firefox-${version}.tar.bz2";
         sha512Of = chksum: file: extractSha512Sum (readFile (fetchurl chksum)) file;
-      in rec {
+      in
+      rec {
         chksum = "${dir}/SHA512SUMS";
         chksumSig = "${chksum}.asc";
         chksumSha256 = hashFile "sha256" (fetchurl "${dir}/SHA512SUMS");
@@ -63,19 +66,21 @@ let
         sigSha512 = null;
       }
     else
-      # For Nightly versions:
-      # https://download.cdn.mozilla.net/pub/firefox/nightly/latest-mozilla-central/firefox-56.0a1.en-US.linux-x86_64.checksums
+    # For Nightly versions:
+    # https://download.cdn.mozilla.net/pub/firefox/nightly/latest-mozilla-central/firefox-56.0a1.en-US.linux-x86_64.checksums
       let
         dir =
           if timestamp == null then
             let
               buildhubJSON = with builtins;
                 fromJSON (readFile (fetchurl "https://download.cdn.mozilla.net/pub/firefox/nightly/latest-mozilla-central/firefox-${version}.en-US.${system}.buildhub.json"));
-            in builtins.replaceStrings [ "/${file}" ] [ "" ] buildhubJSON.download.url
-          else "https://download.cdn.mozilla.net/pub/firefox/nightly/${yearOf timestamp}/${monthOf timestamp}/${timestamp}-mozilla-central" ;
+            in
+            builtins.replaceStrings [ "/${file}" ] [ "" ] buildhubJSON.download.url
+          else "https://download.cdn.mozilla.net/pub/firefox/nightly/${yearOf timestamp}/${monthOf timestamp}/${timestamp}-mozilla-central";
         file = "firefox-${version}.en-US.${system}.tar.bz2";
         sha512Of = chksum: file: head (match ".*[\n]([0-9a-f]*) sha512 [0-9]* ${file}[\n].*" (readFile (fetchurl chksum)));
-      in rec {
+      in
+      rec {
         chksum = "${dir}/firefox-${version}.en-US.${system}.checksums";
         chksumSig = null;
         # file content:
@@ -91,11 +96,12 @@ let
   # that we guarantee that we have
   verifyFileAuthenticity = { file, sha512, chksum, chksumSig }:
     assert extractSha512Sum (builtins.readFile chksum) file == sha512;
-    super.runCommand "check-firefox-signature" {
-      buildInputs = [ self.gnupg ];
-      FILE = chksum;
-      ASC = chksumSig;
-    } ''
+    super.runCommand "check-firefox-signature"
+      {
+        buildInputs = [ self.gnupg ];
+        FILE = chksum;
+        ASC = chksumSig;
+      } ''
       set -eu
       gpg --dearmor < ${pgpKey} > keyring.gpg
       gpgv --keyring=./keyring.gpg $ASC $FILE
@@ -106,20 +112,21 @@ let
   # sources from the remote.
   fetchVersion = info:
     if info.chksumSig != null then
-      super.fetchurl {
-        inherit (info) url sha512;
+      super.fetchurl
+        {
+          inherit (info) url sha512;
 
-        # This is a fixed derivation, but we still add as a dependency the
-        # verification of the checksum.  Thus, this fetch script can only be
-        # executed once the verifyAuthenticity script finished successfully.
-        postFetch = ''
-          : # Authenticity Check (${verifyFileAuthenticity {
-            inherit (info) file sha512;
-            chksum = builtins.fetchurl { url = info.chksum; sha256 = info.chksumSha256; };
-            chksumSig = builtins.fetchurl { url = info.chksumSig; sha256 = info.chksumSigSha256; };
-          }})
-        '';
-      }
+          # This is a fixed derivation, but we still add as a dependency the
+          # verification of the checksum.  Thus, this fetch script can only be
+          # executed once the verifyAuthenticity script finished successfully.
+          postFetch = ''
+            : # Authenticity Check (${verifyFileAuthenticity {
+              inherit (info) file sha512;
+              chksum = builtins.fetchurl { url = info.chksum; sha256 = info.chksumSha256; };
+              chksumSig = builtins.fetchurl { url = info.chksumSig; sha256 = info.chksumSigSha256; };
+            }})
+          '';
+        }
     else
       super.fetchurl {
         inherit (info) url sha512;
@@ -129,12 +136,12 @@ let
         # prevent the output from being reused.
         postFetch =
           let asc = super.fetchurl { url = info.sig; sha512 = info.sigSha512; }; in ''
-          : # Authenticity Check
-          set -eu
-          export PATH="$PATH:${self.gnupg}/bin/"
-          gpg --dearmor < ${pgpKey} > keyring.gpg
-          gpgv --keyring=./keyring.gpg ${asc} $out
-        '';
+            : # Authenticity Check
+            set -eu
+            export PATH="$PATH:${self.gnupg}/bin/"
+            gpg --dearmor < ${pgpKey} > keyring.gpg
+            gpgv --keyring=./keyring.gpg ${asc} $out
+          '';
       };
 
   firefoxVersion = version:
@@ -150,11 +157,12 @@ let
         # Add a dependency on the signature check.
         src = fetchVersion info;
       }));
-      in super.wrapFirefox pkg {
-        pname = "${pkg.binaryName}-bin";
-        desktopName = version.name;
-        wmClass = version.wmClass;
-      };
+    in
+    super.wrapFirefox pkg {
+      pname = "${pkg.binaryName}-bin";
+      desktopName = version.name;
+      wmClass = version.wmClass;
+    };
 
   firefoxVariants = {
     firefox-nightly-bin = {
@@ -197,10 +205,10 @@ in
 
   # Set of packages which are automagically updated. Do not rely on these for
   # reproducible builds.
-  latest = (super.latest or {}) // (builtins.mapAttrs (n: v: firefoxVersion v) firefoxVariants);
+  latest = (super.latest or { }) // (builtins.mapAttrs (n: v: firefoxVersion v) firefoxVariants);
 
   # Set of packages which used to build developer environment
-  devEnv = (super.shell or {}) // {
+  devEnv = (super.shell or { }) // {
     gecko = super.callPackage ./pkgs/gecko {
       inherit (self.python38Packages) setuptools;
       pythonFull = self.python38Full;
@@ -230,5 +238,5 @@ in
     };
   };
 
-  jsdoc = super.callPackage ./pkgs/jsdoc {};
+  jsdoc = super.callPackage ./pkgs/jsdoc { };
 }

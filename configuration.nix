@@ -22,7 +22,6 @@ in
       ./hardware-configuration.nix
       ./pkgs.nix
       ./boot.nix
-      # ./fs.nix
       ./environment.nix
       ./hardware.nix
       ./systemd.nix
@@ -36,14 +35,12 @@ in
       ./polkit.nix
     ];
 
-  nixpkgs.overlays = [ (import ./overlays/pkgs.nix) (import ./overlays/firefox-overlay.nix) ];
+  nixpkgs.overlays = [ (import ./overlays/jetbrains.nix) ];
   nix.settings.trusted-users = [ "root" "igni" ];
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   nix.settings.auto-optimise-store = true;
 
-  nixpkgs.config = {
-    allowUnfree = true;
-  };
+  nixpkgs.config.allowUnfree = true;
 
   time.timeZone = "Europe/Moscow";
 
@@ -55,8 +52,7 @@ in
   #   useXkbConfig = true; # use xkb.options in tty.
   # };
 
-  #virtualisation.libvirtd.enable = true;
-  #programs.virt-manager.enable = true;
+  virtualisation.docker.enable = true;
 
   system.stateVersion = "23.11";
 }

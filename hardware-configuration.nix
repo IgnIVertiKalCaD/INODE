@@ -30,29 +30,29 @@
   fileSystems."/mnt/a6f2b9d3-1b9b-46b4-ac60-7150c90e48f1" =
     {
       device = "/dev/disk/by-uuid/a6f2b9d3-1b9b-46b4-ac60-7150c90e48f1";
-      options = [ "defaults" "x-gvfs-show" ];
       fsType = "ext4";
-    };
-
-  fileSystems."/mnt/dc84c237-143d-4017-94a0-5c8a076d493f" =
-    {
-      device = "/dev/disk/by-uuid/dc84c237-143d-4017-94a0-5c8a076d493f";
-      options = [ "defaults" "x-gvfs-show" ];
-      fsType = "ext4";
-    };
-
-  fileSystems."/mnt/6106d853-8f55-4d4e-949c-66e19666671c" =
-    {
-      device = "/dev/disk/by-uuid/6106d853-8f55-4d4e-949c-66e19666671c";
-      options = [ "defaults" "x-gvfs-show" ];
-      fsType = "ext4";
+      options = [ "x-gvfs-show" ];
     };
 
   fileSystems."/mnt/f450d8ee-cfcd-4d49-af5e-c18cfab65a09" =
     {
       device = "/dev/disk/by-uuid/f450d8ee-cfcd-4d49-af5e-c18cfab65a09";
-      options = [ "defaults" "x-gvfs-show" ];
       fsType = "btrfs";
+      options = [ "x-gvfs-show" ];
+    };
+
+  fileSystems."/mnt/dc84c237-143d-4017-94a0-5c8a076d493f" =
+    {
+      device = "/dev/disk/by-uuid/dc84c237-143d-4017-94a0-5c8a076d493f";
+      fsType = "ext4";
+      options = [ "x-gvfs-show" ];
+    };
+
+  fileSystems."/mnt/880391e3-4e65-4b5e-9670-d58d6a7ef9eb" =
+    {
+      device = "/dev/disk/by-uuid/880391e3-4e65-4b5e-9670-d58d6a7ef9eb";
+      fsType = "ext4";
+      options = [ "x-gvfs-show" ];
     };
 
   swapDevices =
@@ -63,8 +63,15 @@
   # still possible to use this option, but it's recommended to use it in conjunction
   # with explicit per-interface declarations with `networking.interfaces.<interface>.useDHCP`.
   networking.useDHCP = lib.mkDefault true;
+  # networking.interfaces.br-1042cdaac853.useDHCP = lib.mkDefault true;
+  # networking.interfaces.br-17e3369b254d.useDHCP = lib.mkDefault true;
+  # networking.interfaces.br-bc987b1339dd.useDHCP = lib.mkDefault true;
+  # networking.interfaces.docker0.useDHCP = lib.mkDefault true;
   # networking.interfaces.eno1.useDHCP = lib.mkDefault true;
   # networking.interfaces.tailscale0.useDHCP = lib.mkDefault true;
+  # networking.interfaces.tun0.useDHCP = lib.mkDefault true;
+  # networking.interfaces.veth9d4e2ec.useDHCP = lib.mkDefault true;
+  # networking.interfaces.vethd92c00c.useDHCP = lib.mkDefault true;
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
