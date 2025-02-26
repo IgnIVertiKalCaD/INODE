@@ -1,8 +1,5 @@
 { config, lib, pkgs, ... }:
 
-let
-  niri = pkgs.callPackage ./mods/niri/niri.nix { };
-in
 {
   systemd = {
     #services.nix-daemon.environment = {
@@ -13,6 +10,20 @@ in
 
     extraConfig = "DefaultTimeoutStopSec=10s";
     services = {
+      sing-box = {
+        description = "sing-box start";
+        wantedBy = [ "network.target" ];
+        wants = [ "network.target" ];
+        after = [ "network.target" ];
+        serviceConfig = {
+          Type = "simple";
+          ExecStart = "${pkgs.sing-box}/bin/sing-box run -c /etc/sing-box/sing-box.json";
+          Restart = "on-failure";
+          RestartSec = 1;
+          TimeoutStopSec = 10;
+        };
+      };
+
       lact-daemon = {
         enable = true;
         wantedBy = [ "multi-user.target" ];
@@ -23,16 +34,6 @@ in
     };
 
     user.services = {
-      niri-session = {
-        description = "autostart niri-session";
-        wantedBy = [ "default.target" ];
-        serviceConfig = {
-          ExecStart = "${niri}/bin/niri-session";
-          Restart = "always";
-          RestartSec = 5;
-        };
-      };
-
       polkit-gnome-authentication-agent-1 = {
         description = "polkit-gnome-authentication-agent-1";
         wantedBy = [ "graphical-session.target" ];
@@ -46,22 +47,6 @@ in
           TimeoutStopSec = 10;
         };
       };
-
-      shadowsocks-local = {
-        enable = true;
-        description = "RF sasat";
-        wantedBy = [ "graphical-session.target" ];
-        wants = [ "graphical-session.target" ];
-        after = [ "multi-user.target" ];
-        serviceConfig = {
-          Type = "simple";
-          ExecStart = "${pkgs.shadowsocks-rust}/bin/sslocal -c /etc/shadowsocks/ss-client.json";
-          Restart = "on-failure";
-          RestartSec = 1;
-          TimeoutStopSec = 10;
-        };
-      };
-
     };
   };
 }

@@ -35,7 +35,7 @@ in
       ./polkit.nix
     ];
 
-  nixpkgs.overlays = [ (import ./overlays/jetbrains.nix) (import ./overlays/firefox-overlay.nix) ];
+  nixpkgs.overlays = [ (import ./overlays/jetbrains.nix) ];
   nix.settings.trusted-users = [ "root" "igni" ];
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   nix.settings.auto-optimise-store = true;
@@ -52,8 +52,7 @@ in
   #   useXkbConfig = true; # use xkb.options in tty.
   # };
 
-  #virtualisation.libvirtd.enable = true;
-  #programs.virt-manager.enable = true;
+  virtualisation.docker.enable = true;
 
   system.stateVersion = "23.11";
 }

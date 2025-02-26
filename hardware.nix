@@ -1,8 +1,6 @@
 { config, lib, pkgs, unstablepkgs, ... }:
 
 {
-  virtualisation.docker.enable = true;
-
   hardware.amdgpu.amdvlk.enable = false;
   hardware.cpu.amd.updateMicrocode = true;
 

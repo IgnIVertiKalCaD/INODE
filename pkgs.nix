@@ -5,24 +5,24 @@
     systemPackages = [
     ]
     ++ (with pkgs; [
-vesktop
-sing-box
-tor-browser 
-exodus 
-keybase-gui 
-keybase 
-nix-index
-gcc
+      nautilus
+      musicpod
+      keepassxc
+      vscodium
+      btop
+      devbox
+      vesktop
+      sing-geoip
+      sing-box
+      tor-browser
+      exodus
+      keybase-gui
+      keybase
+      nix-index
       resources
       rustrover
-      teamspeak_client
-      micro
-      btop
-      openvpn
-      shadowsocks-rust
+      teamspeak5_client
       google-chrome
-      epiphany
-      postman
       prismlauncher
       cliphist
       mangohud
@@ -33,7 +33,6 @@ gcc
       bottles
       wl-clipboard
       yarn
-      rustup
       binutils
       (callPackage ./mods/davinci/davinci-resolve-crack.nix { })
       (callPackage ./mods/niri/niri.nix { })
@@ -57,22 +56,18 @@ gcc
       xdg-desktop-portal-gnome
       curl
       mpvpaper
-      rustc
       transmission_4-gtk
       heroic
       evince
       gnome-text-editor
-      lm_sensors
-      gnome-tweaks
       gnome-disk-utility
-      eog
-      gnome-music
+      swayimg
       nemo-with-extensions
-])
+      firefox
+    ])
     ++ (with unstablepkgs; [
       telegram-desktop
       webstorm
-      firefox
     ])
     ++ (with pkgs.nodePackages; [
       nodejs

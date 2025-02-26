@@ -11,16 +11,16 @@
 
 rustPlatform.buildRustPackage rec {
   pname = "xwayland-satellite";
-  version = "0.4";
+  version = "v0.4";
 
   src = fetchFromGitHub {
     owner = "Supreeeme";
     repo = "xwayland-satellite";
-    rev = "v${version}";
+    rev = "${version}";
     hash = "sha256-dwF9nI54a6Fo9XU5s4qmvMXSgCid3YQVGxch00qEMvI=";
   };
 
-  cargoHash = "sha256-nKPSkHbh73xKWNpN/OpDmLnVmA3uygs3a+ejOhwU3yA=";
+  cargoHash = "sha256-Nh5ssclAqZFOBDJtEjBRs2z1l/FIVZgvBr1lxjoVjG4=";
 
   nativeBuildInputs = [
     pkg-config
@@ -46,6 +46,11 @@ rustPlatform.buildRustPackage rec {
     "--skip=quick_delete"
     "--skip=reparent"
     "--skip=toplevel_flow"
+    "--skip=fake_selection_targets"
+    "--skip=incr_copy_from_x11"
+    "--skip=primary_output"
+    "--skip=wayland_then_x11_clipboard_owner"
+    "--skip=window_properties_after_reparent"
   ];
 
   postInstall = ''
